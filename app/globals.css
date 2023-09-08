@@ -17,11 +17,41 @@
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  color: "#FFF";
+  backgroundcolor: "#FFF";
+  overflow-x: hidden;
+}
+
+.authbg {
+  background: url("../assets/authbg.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.floating-label,
+.floating-label-password {
+  color: #1e4c82;
+  font-size: 13px;
+  font-weight: normal;
+  position: absolute;
+  pointer-events: none;
+  left: 15px;
+  top: 11px;
+  padding: 0 5px;
+  background: #fff;
+  transition: 0.2s ease all;
+  -moz-transition: 0.2s ease all;
+  -webkit-transition: 0.2s ease all;
+  z-index: 999999;
+}
+.floating-input:hover ~ .floating-label,
+.floating-input-password:hover ~ .floating-label-password,
+.floating-input:focus ~ .floating-label,
+.floating-input-password:focus ~ .floating-label-password {
+  top: -8px;
+  font-size: 13px;
+}
+
+.solid-btn {
+  background-color: #010886 !important;
 }

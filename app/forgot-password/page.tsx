@@ -1,9 +1,9 @@
-import SignIn from "@/components/sign-in/SignIn";
+import ForgotPassword from "@/components/forgot-password/ForgotPassword";
 
 const page = () => {
   return (
     <div className="authbg bg-[#A1ACB8] w-screen h-screen flex items-center justify-center">
-      <SignIn />
+      <ForgotPassword />
     </div>
   );
 };
