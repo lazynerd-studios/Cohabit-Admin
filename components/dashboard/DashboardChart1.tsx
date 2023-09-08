@@ -1,3 +1,4 @@
+"use client";
 import SeeMoreIcon from "@/assets/icons/SeeMoreIcon";
 import BarCharts from "./BarChart";
 import AreaCharts from "./AreaChart";
@@ -95,6 +96,14 @@ const DashboardChart1 = () => {
             </h4>
             <Progress
               percent={25}
+              format={(percent) => (
+                <div>
+                  <p>{percent}%</p>
+                  <p className="text-[14px] font-[400] text-[#32475C99]/[60%]">
+                    Average
+                  </p>
+                </div>
+              )}
               type="circle"
               strokeColor={"#16DD97"}
               strokeWidth={10}

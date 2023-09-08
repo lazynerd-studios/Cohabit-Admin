@@ -9,7 +9,7 @@ const Header = () => {
     <div className="w-full p-[1%] flex items-center justify-between bg-[#FFF]">
       <div className="flex items-center gap-[0.5rem]">
         <SearchIcon className="stroke-[#32475CDE]/[87%]" />
-        <Input placeholder="Search" />
+        <Input className="searchInput" placeholder="Search" />
       </div>
       <div className="flex items-center">
         <Notification />

@@ -55,3 +55,12 @@ body {
 .solid-btn {
   background-color: #010886 !important;
 }
+
+
+.searchInput {
+  border-radius: 0 !important;
+  border-top-width: 0 !important;
+  border-right-width: 0 !important;
+  border-left-width: 0 !important;
+  padding-bottom: 0 !important;
+}
