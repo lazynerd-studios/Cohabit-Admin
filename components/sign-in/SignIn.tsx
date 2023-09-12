@@ -28,18 +28,18 @@ const SignIn = () => {
         </label>
       </div>
       <div className="w-full mx-auto flex flex-col items-start justify-start gap-[0.5rem] relative">
+        <label
+          htmlFor="password"
+          className="text-[#0C1938] text-[16px] font-[700] floatinglabelpassword"
+        >
+          password
+        </label>
         <PasswordInput
-          className="floating-input-password"
+          className="floatinginputpassword"
           id="password"
           type="password"
           placeholder="password"
         />
-        <label
-          htmlFor="password"
-          className="text-[#0C1938] text-[16px] font-[700] floating-label-password"
-        >
-          password
-        </label>
       </div>
       <div className="w-full mx-auto flex items-center justify-between">
         <div className="mxauto flex items-center justify-start gap-[0.3rem]">
