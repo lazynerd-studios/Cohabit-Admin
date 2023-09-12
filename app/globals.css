@@ -44,10 +44,10 @@ body {
   -webkit-transition: 0.2s ease all;
   z-index: 999999;
 }
-.floating-input:hover ~ .floating-label,
-.floating-input-password:hover ~ .floating-label-password,
+/* .floating-input:hover ~ .floating-label,
+.floating-input-password:hover ~ .floating-label-password, */
 .floating-input:focus ~ .floating-label,
-.floating-input-password:focus ~ .floating-label-password {
+.floating-inputpassword:focus ~ .floating-labelpassword {
   top: -8px;
   font-size: 13px;
 }
