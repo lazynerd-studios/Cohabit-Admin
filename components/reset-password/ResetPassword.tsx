@@ -18,26 +18,27 @@ const ResetPassword = () => {
         </p>
       </div>
       <div className="w-full mx-auto flex flex-col items-start justify-start gap-[0.5rem] relative">
-        <PasswordInput className="floating-input" id="email" type="email" />
         <label
-          htmlFor="email"
-          className="text-[#0C1938] text-[16px] font-[700] floating-label"
+          htmlFor="password"
+          className="text-[#0C1938] text-[16px] font-[700] floatinglabel"
         >
           New Password
         </label>
+        <PasswordInput className="floatinginput" id="password" />
       </div>
       <div className="w-full mx-auto flex flex-col items-start justify-start gap-[0.5rem] relative">
-        <PasswordInput
-          className="floating-input-password"
-          id="confirm-password"
-          type="password"
-        />
         <label
           htmlFor="confirm-password"
-          className="text-[#0C1938] text-[16px] font-[700] floating-label-password"
+          className="text-[#0C1938] text-[16px] font-[700] floatinglabel-password"
         >
           Confirm Password
         </label>
+        <PasswordInput
+          className="floatinginput-password"
+          id="confirm-password"
+          type="password"
+          placeholder="confirm password"
+        />
       </div>
 
       <Button className="solid-btn" type="primary">

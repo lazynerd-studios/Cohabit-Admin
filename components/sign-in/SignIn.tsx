@@ -32,6 +32,7 @@ const SignIn = () => {
           className="floating-input-password"
           id="password"
           type="password"
+          placeholder="password"
         />
         <label
           htmlFor="password"
