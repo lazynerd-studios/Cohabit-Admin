@@ -16,10 +16,12 @@ import {
   Rate,
   Modal,
   Tabs,
+  Table,
   Upload,
   DatePicker,
   Collapse,
   FloatButton,
+  Switch,
   InputProps,
   InputNumberProps,
   ButtonProps,
@@ -37,9 +39,11 @@ import {
   RateProps,
   ModalProps,
   TabsProps,
+  TableProps,
   UploadProps,
   DatePickerProps,
   FloatButtonProps,
+  SwitchProps,
 } from "antd";
 import type { CollapseProps } from "antd";
 import { TextAreaProps } from "antd/es/input";
@@ -172,7 +176,20 @@ export const AuthButton = ({ ...props }: ButtonProps) => (
     <Button {...props} />
   </ConfigProvider>
 );
-
+export const ActionButton = ({ ...props }: ButtonProps) => (
+  <ConfigProvider
+    theme={{
+      token: {
+        colorPrimary: "#010886",
+        borderRadius: 2,
+        controlHeight: 45,
+        colorBorder: "#010886",
+      },
+    }}
+  >
+    <Button {...props} />
+  </ConfigProvider>
+);
 export const HeaderButton = ({ ...props }: ButtonProps) => (
   <ConfigProvider
     theme={{
@@ -463,6 +480,22 @@ export const CustomTabs = ({ ...props }: TabsProps) => (
   </ConfigProvider>
 );
 
+export const ProfileTabs = ({ ...props }: TabsProps) => (
+  <ConfigProvider
+    theme={{
+      token: {
+        colorPrimary: "#16DD97",
+        borderRadius: 5,
+      },
+      components: {
+        Tabs: { inkBarColor: "", itemSelectedColor: "#16DD97" },
+      },
+    }}
+  >
+    <Tabs {...props} />
+  </ConfigProvider>
+);
+
 export const CustomUpload = ({ ...props }: UploadProps) => (
   <ConfigProvider
     theme={{
@@ -512,5 +545,33 @@ export const CustomFloatButton = ({ ...props }: FloatButtonProps) => (
     }}
   >
     <FloatButton {...props} />
+  </ConfigProvider>
+);
+
+export const CustomTable = ({ ...props }: TableProps<any>) => (
+  <ConfigProvider
+    theme={{
+      token: {
+        colorPrimary: "#010886",
+        borderRadius: 8,
+      },
+      components: {
+        Table: {},
+      },
+    }}
+  >
+    <Table {...props} />
+  </ConfigProvider>
+);
+
+export const CustomSwitch = ({ ...props }: SwitchProps) => (
+  <ConfigProvider
+    theme={{
+      token: {
+        colorPrimary: "#16DD97",
+      },
+    }}
+  >
+    <Switch {...props} />
   </ConfigProvider>
 );

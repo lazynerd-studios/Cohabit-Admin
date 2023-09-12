@@ -47,11 +47,11 @@ const SideBar = () => {
       ),
 
       getItem(
-        <Link href="/dashboard/message">House-Seekers</Link>,
+        <Link href="/dashboard/house-seekers">House-Seekers</Link>,
         "/dashboard/house-seekers",
         <UserIcon
           className={`${
-            path === "/dashboard/house-seekers"
+            path.includes("house-seekers")
               ? "stroke-colorPrimary"
               : "stroke-[#7C8493]"
           } h-[18px]`}
@@ -59,21 +59,19 @@ const SideBar = () => {
       ),
       getItem(
         <Link href="/dashboard/host">Hosts</Link>,
-        "/dashboard/find-property",
+        "/dashboard/host",
         <UserIcon
           className={`${
-            path === "/dashboard/host"
-              ? "stroke-colorPrimary"
-              : "stroke-[#7C8493]"
+            path.includes("host") ? "stroke-colorPrimary" : "stroke-[#7C8493]"
           } h-[18px]`}
         />
       ),
       getItem(
         <Link href="/dashboard/houses-posted">Houses Posted</Link>,
-        "/dashboard/profile",
+        "/dashboard/houses-posted",
         <UserIcon
           className={`${
-            path === "/dashboard/houses-posted"
+            path.includes("houses-posted")
               ? "stroke-colorPrimary"
               : "stroke-[#7C8493]"
           } h-[18px]`}
@@ -84,29 +82,27 @@ const SideBar = () => {
         "/dashboard/payment-requests",
         <SettingsIcon
           className={`${
-            path === "/dashboard/payment-requests"
+            path.includes("payment-requests")
               ? "stroke-colorPrimary"
               : "stroke-[#7C8493]"
           } h-[18px]`}
         />
       ),
       getItem(
-        <Link href="/dashboard/payment-requests">Admin</Link>,
-        "/dashboard/payment-requests",
+        <Link href="/dashboard/admin">Admin</Link>,
+        "/dashboard/admin",
         <SettingsIcon
           className={`${
-            path === "/dashboard/payment-requests"
-              ? "stroke-colorPrimary"
-              : "stroke-[#7C8493]"
+            path.includes("admin") ? "stroke-colorPrimary" : "stroke-[#7C8493]"
           } h-[18px]`}
         />
       ),
       getItem(
-        <Link href="/dashboard/help-center">Roles and Permission</Link>,
-        "/dashboard/help-center",
+        <Link href="/dashboard/roles-permission">Roles and Permission</Link>,
+        "/dashboard/roles-permission",
         <UserIcon
           className={`${
-            path === "/dashboard/roles-permission"
+            path.includes("roles-permission")
               ? "stroke-colorPrimary"
               : "stroke-[#7C8493]"
           } h-[18px]`}
@@ -117,7 +113,7 @@ const SideBar = () => {
         "/dashboard/charges",
         <UserIcon
           className={`${
-            path === "/dashboard/charges"
+            path.includes("charges")
               ? "stroke-colorPrimary"
               : "stroke-[#7C8493]"
           } h-[18px]`}
@@ -129,7 +125,7 @@ const SideBar = () => {
         "/dashboard/settings",
         <SettingsIcon
           className={`${
-            path === "/dashboard/settings"
+            path.includes("settings")
               ? "stroke-colorPrimary"
               : "stroke-[#7C8493]"
           } h-[18px]`}
@@ -139,7 +135,11 @@ const SideBar = () => {
     [path]
   );
   useEffect(() => {
-    setActive(path);
+    const rel = path.split("/");
+    setActive(() => {
+      if (rel[2]) return "/" + rel[1] + "/" + rel[2];
+      else return "/" + rel[1];
+    });
   }, [path]);
   const onClick: MenuProps["onClick"] = (e) => {
     setActive(e.key);
@@ -152,6 +152,7 @@ const SideBar = () => {
         onClick={onClick}
         defaultSelectedKeys={[active]}
         selectedKeys={[active]}
+        activeKey={active}
         items={items}
       />
       <div className="grid md:grid-cols-[20%_80%] mx-auto justify-between w-[80%] items-center gap-[1rem] py-[1rem]">

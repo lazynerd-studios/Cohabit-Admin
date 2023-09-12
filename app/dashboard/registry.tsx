@@ -1,4 +1,4 @@
-import SideBar from "@/components/side-bar/SideBar";
+import SideBar from "@/components/global/SideBar";
 import Header from "@/components/header/Header";
 const Registry = ({ children }: { children: React.ReactNode }) => {
   return (

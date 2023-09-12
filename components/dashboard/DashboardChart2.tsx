@@ -115,7 +115,7 @@ const DashboardChart2 = () => {
               <h4 className="text-[48px] font-[700] text-[#32475CDE]/[87%]">
                 4.0
               </h4>
-              <Rate value={4.0} />
+              <Rate disabled value={4.0} />
             </span>
             <span className="flex items-center justify-start gap-[1rem]">
               <h6 className="bg-[#666CFF1F]/[12%] text-[#696CFF] rounded-[6px] text-[12px] font-[400] p-[1%]">

@@ -56,11 +56,27 @@ body {
   background-color: #010886 !important;
 }
 
-
 .searchInput {
   border-radius: 0 !important;
   border-top-width: 0 !important;
   border-right-width: 0 !important;
   border-left-width: 0 !important;
   padding-bottom: 0 !important;
+}
+.searchInput:focus {
+  border-color: black !important;
+}
+
+.solid-action-btn {
+  background-color: rgba(156, 169, 249, 0.3) !important;
+}
+
+.carouselBtn button {
+  background: #010886 !important;
+}
+
+.profile-tab {
+  padding-right: 0.5rem !important;
+  padding-left: 0.5rem !important;
+  overflow-y: scroll !important;
 }
