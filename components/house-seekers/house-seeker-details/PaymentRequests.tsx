@@ -6,8 +6,11 @@ const PaymentRequests = () => {
   return (
     <div className="grid grid-cols-1 w-full">
       <div className="flex flex-col gap-[0.5rem]">
-        {arr.map(() => (
-          <div className="p-[0.5rem] border border-[#D6DDEB] px-[20px] py-[13px] flex flexcol gap-[2rem]">
+        {arr.map((e, i) => (
+          <div
+            key={i}
+            className="p-[0.5rem] border border-[#D6DDEB] px-[20px] py-[13px] flex flexcol gap-[2rem]"
+          >
             <Image alt="avatar" src={room} />
             <div className="flex flex-col gap-[0.5rem]">
               <span className="flex gap-[0.5rem]">

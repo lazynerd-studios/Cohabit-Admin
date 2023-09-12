@@ -7,7 +7,7 @@ import { CustomSwitch as Switch } from "@/lib/AntDesignComponents";
 import { useState } from "react";
 import AccountModal from "@/components/global/AccountModal";
 
-const page = () => {
+const Page = () => {
   const { back } = useRouter();
   const [toogle, setToogle] = useState(true);
   const [open, setOpen] = useState(false);
@@ -45,4 +45,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

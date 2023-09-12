@@ -1,7 +1,6 @@
 "use client";
 import { ProfileTabs as Tabs } from "@/lib/AntDesignComponents";
 import { TabsProps } from "antd";
-import Profile from "@/components/profile/Profile";
 import ProfileSection from "@/components/profile/ProfileSection";
 import PaymentRequests from "./PaymentRequests";
 import RecentActivites from "./RecentActivites";

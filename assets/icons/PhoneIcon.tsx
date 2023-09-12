@@ -1,4 +1,4 @@
-import { Icon } from "./IconType";
+import { Icon } from "./types";
 
 const PhoneIcon = ({ className }: Icon) => {
   return (

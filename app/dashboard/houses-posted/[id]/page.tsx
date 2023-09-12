@@ -4,7 +4,7 @@ import BackIcon from "@/assets/icons/BackIcon";
 import { useRouter } from "next/navigation";
 import Property from "@/components/property/Property";
 
-const page = () => {
+const Page = () => {
   const { back } = useRouter();
   return (
     <Registry>
@@ -28,4 +28,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
