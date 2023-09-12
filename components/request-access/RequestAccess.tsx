@@ -5,8 +5,18 @@ import {
 } from "@/lib/AntDesignComponents";
 import BackArrow from "@/assets/icons/BackArrow";
 import Link from "next/link";
+import { useState, ChangeEventHandler } from "react";
 
 const RequestAccess = () => {
+  const [formdata, setFormData] = useState({
+    email: "",
+  });
+  const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    const { name, value } = e.currentTarget;
+    setFormData((prev) => {
+      return { ...prev, [name]: value };
+    });
+  };
   return (
     <div className="grid grid-cols-1 gap-[1.5rem] w-[35%] mx-auto p-[1rem] rounded-[8px] bg-[#FFF] shadow-sm">
       <div className="flex flex-col gap-[0.2rem]">
@@ -18,10 +28,19 @@ const RequestAccess = () => {
         </p>
       </div>
       <div className="w-full mx-auto flex flex-col items-start justify-start gap-[0.5rem] relative">
-        <Input className="floating-input" id="email" type="email" />
+        <Input
+          className="floating-input"
+          name="email"
+          value={formdata.email}
+          onChange={handleChange}
+          id="email"
+          type="email"
+        />
         <label
           htmlFor="email"
-          className="text-[#0C1938] text-[16px] font-[700] floating-label"
+          className={`text-[#0C1938] text-[16px] font-[700] floating-label ${
+            formdata.email && "focusedlabel"
+          }`}
         >
           Email
         </label>

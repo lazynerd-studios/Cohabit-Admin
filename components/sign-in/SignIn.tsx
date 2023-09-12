@@ -5,9 +5,17 @@ import {
   CustomCheckBox as Checkbox,
   AuthButton as Button,
 } from "@/lib/AntDesignComponents";
+import { ChangeEventHandler, useState } from "react";
 import Link from "next/link";
 
 const SignIn = () => {
+  const [formdata, setFormData] = useState({ email: "", password: "" });
+  const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    const { name, value } = e.currentTarget;
+    setFormData((prev) => {
+      return { ...prev, [name]: value };
+    });
+  };
   return (
     <div className="grid grid-cols-1 gap-[1.5rem] w-[35%] mx-auto p-[1rem] rounded-[8px] bg-[#FFF] shadow-sm">
       <div className="flex flex-col gap-[0.2rem]">
@@ -19,27 +27,40 @@ const SignIn = () => {
         </p>
       </div>
       <div className="w-full mx-auto flex flex-col items-start justify-start gap-[0.5rem] relative">
-        <Input className="floating-input" id="email" type="email" />
+        <Input
+          name="email"
+          onChange={handleChange}
+          value={formdata?.email}
+          className="floating-input"
+          id="email"
+          type="email"
+        />
         <label
           htmlFor="email"
-          className="text-[#0C1938] text-[16px] font-[700] floating-label"
+          className={`text-[#0C1938] text-[16px] font-[700] floating-label ${
+            formdata.email && "focusedlabel"
+          }`}
         >
           Email
         </label>
       </div>
       <div className="w-full mx-auto flex flex-col items-start justify-start gap-[0.5rem] relative">
+        <PasswordInput
+          className="floating-input"
+          id="password"
+          type="password"
+          name="password"
+          onChange={handleChange}
+          value={formdata?.password}
+        />
         <label
           htmlFor="password"
-          className="text-[#0C1938] text-[16px] font-[700] floatinglabelpassword"
+          className={`text-[#0C1938] text-[16px] font-[700] floating-label ${
+            formdata.password && "focusedlabel"
+          }`}
         >
           password
         </label>
-        <PasswordInput
-          className="floatinginputpassword"
-          id="password"
-          type="password"
-          placeholder="password"
-        />
       </div>
       <div className="w-full mx-auto flex items-center justify-between">
         <div className="mxauto flex items-center justify-start gap-[0.3rem]">
