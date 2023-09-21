@@ -66,6 +66,19 @@ export const CustomInput = ({ ...props }: InputProps) => (
   </ConfigProvider>
 );
 
+export const CustomInlineInput = ({ ...props }: InputProps) => (
+  <ConfigProvider
+    theme={{
+      token: {
+        colorPrimary: "#010886",
+        borderRadius: 5,
+      },
+    }}
+  >
+    <Input {...props} />
+  </ConfigProvider>
+);
+
 export const CustomInputNumber = ({ ...props }: InputNumberProps) => (
   <ConfigProvider
     theme={{
@@ -557,6 +570,11 @@ export const CustomTable = ({ ...props }: TableProps<any>) => (
       },
       components: {
         Table: {},
+        Pagination: {
+          itemActiveBg: "#010886",
+          colorText: "#010886",
+          colorPrimary: "#FFF",
+        },
       },
     }}
   >

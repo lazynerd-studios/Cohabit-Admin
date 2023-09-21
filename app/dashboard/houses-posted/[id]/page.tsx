@@ -8,7 +8,7 @@ const Page = () => {
   const { back } = useRouter();
   return (
     <Registry>
-      <div className="grid grid-cols-1 grid-rows-[10%_90%] w-[98%] mx-auto max-h-screen overflow-y-scroll">
+      <div className="grid grid-cols-1 grid-rows-[10%_90%] w-[98%] mx-auto max-h-screen overflow-y-scroll py-[1%] gap-[1rem]">
         <div className="flex items-center justify-between gap-[0.5rem]">
           <span className="flex items-center gap-[0.5rem]">
             <BackIcon
