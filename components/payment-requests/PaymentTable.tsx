@@ -122,6 +122,7 @@ const PaymentsTable = () => {
         </Button>
       ),
       width: "20%",
+      fixed: "right",
     },
   ];
 
@@ -161,7 +162,7 @@ const PaymentsTable = () => {
 
   return (
     <div className="grid grid-cols-1 gap-[0.5rem]">
-      <div className="flex items-start gap-[1rem] justify-start">
+      <div className="flex items-start gap-[0.2rem] md:gap-[1rem] justify-start">
         <div>
           <DatePicker placeholder="Start Date" />
         </div>
@@ -178,7 +179,7 @@ const PaymentsTable = () => {
       <Table
         columns={columns}
         //   rowKey={(record) => record.login.uuid}
-        scroll={{ y: 500 }}
+        scroll={{ y: 500, x: 800 }}
         dataSource={data}
         pagination={tableParams.pagination}
         loading={loading}
