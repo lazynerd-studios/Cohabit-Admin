@@ -16,7 +16,6 @@ const AddAdminModal = ({ open, setOpen }: modalProps) => {
   return (
     <Modal
       className="rounded-[10px]"
-      width={"40%"}
       open={open}
       onCancel={handleCancel}
       title={

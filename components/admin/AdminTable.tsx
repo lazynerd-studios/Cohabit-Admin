@@ -102,7 +102,7 @@ const AdminTable = () => {
       render: () => <Button icon={<EditIcon />}>Change role</Button>,
       width: "20%",
     },
-    { dataIndex: "_id", render: (id) => "...", width: "10%" },
+    { dataIndex: "_id", render: (id) => "...", width: "10%", fixed: "right" },
   ];
 
   const fetchData = () => {
@@ -142,7 +142,7 @@ const AdminTable = () => {
   return (
     <>
       <div className="grid grid-cols-1 gap-[0.5rem]">
-        <div className="grid grid-cols-2">
+        <div className="grid grid-cols-1 md:grid-cols-2">
           <span className="text-[#25324B] text-[20px] font-[700]">
             10 Admins
           </span>
@@ -169,7 +169,7 @@ const AdminTable = () => {
         <Table
           columns={columns}
           //   rowKey={(record) => record.login.uuid}
-          scroll={{ y: 500 }}
+          scroll={{ y: 500, x: 800 }}
           dataSource={data}
           pagination={tableParams.pagination}
           loading={loading}
