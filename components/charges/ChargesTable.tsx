@@ -114,13 +114,14 @@ const ChargesTable = () => {
       render: (id) => (
         <Button
           onClick={() => {
-            push("payment-requests/1");
+            push("charges/1");
           }}
           className="text-[14px] font-[600] solid-action-btn"
         >
           View Details
         </Button>
       ),
+      fixed: "right",
       width: "20%",
     },
   ];
@@ -161,7 +162,7 @@ const ChargesTable = () => {
 
   return (
     <div className="grid grid-cols-1 gap-[0.5rem]">
-      <div className="flex items-start gap-[1rem] justify-start">
+      <div className="grid grid-cols-2 md:flex md:flex-row items-start gap-[0.2rem] md:gap-[1rem] justify-start">
         <div>
           <DatePicker placeholder="Start Date" />
         </div>
@@ -178,7 +179,7 @@ const ChargesTable = () => {
       <Table
         columns={columns}
         //   rowKey={(record) => record.login.uuid}
-        scroll={{ y: 500 }}
+        scroll={{ y: 500, x: 800 }}
         dataSource={data}
         pagination={tableParams.pagination}
         loading={loading}

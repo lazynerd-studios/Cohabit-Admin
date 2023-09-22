@@ -15,8 +15,7 @@ const AddRoleModal = ({ open, setOpen }: modalProps) => {
   };
   return (
     <Modal
-      className="rounded-[10px]"
-      width={"40%"}
+      className="rounded-[10px] w-full md:w-[40%]"
       open={open}
       onCancel={handleCancel}
       title={

@@ -93,7 +93,13 @@ const RolesTable = () => {
         ),
       width: "15%",
     },
-    { title: "Action", dataIndex: "_id", render: (id) => "...", width: "10%" },
+    {
+      title: "Action",
+      dataIndex: "_id",
+      render: (id) => "...",
+      width: "10%",
+      fixed: "right",
+    },
   ];
 
   const fetchData = () => {
@@ -147,7 +153,7 @@ const RolesTable = () => {
   return (
     <>
       <div className="grid grid-cols-1 gap-[0.5rem]">
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col md:flex-row items-start gap-[0.5rem] md:items-center justify-between">
           <Button
             className="w-fit flex items-center justify-center"
             icon={<ExportIcon className="p-0 m-0" />}
@@ -172,7 +178,7 @@ const RolesTable = () => {
           rowSelection={{
             ...rowSelection,
           }}
-          scroll={{ y: 500 }}
+          scroll={{ y: 500, x: 800 }}
           dataSource={data}
           pagination={tableParams.pagination}
           loading={loading}

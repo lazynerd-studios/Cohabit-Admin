@@ -38,7 +38,11 @@ const Tab1 = () => {
     <div className="grid grid-cols-1 gap-[0.8rem]">
       <div className="bg-[#FFF] rounded-[8px] p-[2%] grid grid-cols-1 gap-[0.5rem]">
         <div className="flex items-start md:items-center gap-[0.5rem] md:gap-[2rem]">
-          <Image alt="profile" className="h-[6rem] w-[6rem]" src={Avatar} />
+          <Image
+            alt="profile"
+            className="h-[6rem] w-[6rem] md:h-fit md:w-fit"
+            src={Avatar}
+          />
           <Upload {...props}>
             <div className="flex flex-col items-center p-[0.2rem] md:p-[0.5rem]">
               <JpgIcon className="hidden md:block" />
@@ -47,7 +51,7 @@ const Tab1 = () => {
                   Click to replace or drag and drop
                 </p>
               </span>
-              <p className="text-[10px] md:text-[16px] font-[400] text-[#7C8493]">
+              <p className="text-[10px] md:text-[14px] font-[400] text-[#7C8493]">
                 SVG, PNG, JPG or GIF (max. 400 x 400px).
               </p>
             </div>
