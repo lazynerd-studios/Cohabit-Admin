@@ -110,6 +110,7 @@ const HostTable = () => {
         </Button>
       ),
       width: "20%",
+      fixed: "right",
     },
   ];
 
@@ -151,7 +152,7 @@ const HostTable = () => {
     <Table
       columns={columns}
       //   rowKey={(record) => record.login.uuid}
-      scroll={{ y: 500 }}
+      scroll={{ y: 500, x: 800 }}
       dataSource={data}
       pagination={tableParams.pagination}
       loading={loading}

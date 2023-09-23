@@ -6,81 +6,81 @@ import ProfileSection2 from "./ProfileSection2";
 
 const ProfileSection = () => {
   return (
-    <div className="grid grid-cols-[70%_30%] w-full">
+    <div className="grid grid-cols-1 md:grid-cols-[70%_30%] w-full md:py-[1rem]">
       <div className="flex flex-col gap-[0.5rem]">
         <div className="p-[0.5rem] border border-[#D6DDEB] px-[20px] py-[13px] flex flex-col gap-[0.3rem]">
           <h4 className="text-[#25324B] text-[24px] font-[700]">Details</h4>
           <Image alt="avatar" src={Avatar} />
-          <div className="flex flex-col gap-[0.5rem]">
-            <span className="flex gap-[0.5rem]">
+          <div className="flex flex-col gap-[0.5rem] w-full">
+            <span className="flex items-center gap-[0.5rem]">
               <h6 className="text-[#32475C99]/[60%] text-[16px] font-[700]">
                 Full Name:
               </h6>
-              <p className="text-[#32475C99]/[60%] text-[16px] font-[400]">
+              <p className="text-[#32475C99]/[60%] text-[12px] md:text-[16px] font-[400]">
                 James Bond
               </p>
             </span>
-            <span className="flex gap-[0.5rem]">
+            <span className="flex items-center gap-[0.5rem]">
               <h6 className="text-[#32475C99]/[60%] text-[16px] font-[700]">
                 Categories:
               </h6>
-              <p className="text-[#32475C99]/[60%] text-[16px] font-[400]">
+              <p className="text-[#32475C99]/[60%] text-[12px] md:text-[16px] font-[400]">
                 One Bedroom, Bungalow
               </p>
             </span>
-            <span className="flex gap-[0.5rem]">
+            <span className="flex items-center gap-[0.5rem]">
               <h6 className="text-[#32475C99]/[60%] text-[16px] font-[700]">
                 Location:
               </h6>
-              <p className="text-[#32475C99]/[60%] text-[16px] font-[400]">
+              <p className="text-[#32475C99]/[60%] text-[12px] md:text-[16px] font-[400]">
                 Lagos, Nigeria
               </p>
             </span>
-            <span className="flex gap-[0.5rem]">
+            <span className="flex items-center gap-[0.5rem]">
               <h6 className="text-[#32475C99]/[60%] text-[16px] font-[700]">
                 Lifestyle:
               </h6>
-              <p className="text-[#32475C99]/[60%] text-[16px] font-[400]">
+              <p className="text-[#32475C99]/[60%] text-[12px] md:text-[16px] font-[400]">
                 Friendly, Indoor
               </p>
             </span>
-            <span className="flex gap-[0.5rem]">
+            <span className="flex items-center gap-[0.5rem]">
               <h6 className="text-[#32475C99]/[60%] text-[16px] font-[700]">
                 Language:
               </h6>
-              <p className="text-[#32475C99]/[60%] text-[16px] font-[400]">
+              <p className="text-[#32475C99]/[60%] text-[12px] md:text-[16px] font-[400]">
                 English, French
               </p>
             </span>
-            <span className="flex gap-[0.5rem]">
+            <span className="flex items-center gap-[0.5rem]">
               <h6 className="text-[#32475C99]/[60%] text-[16px] font-[700]">
                 Budget:
               </h6>
-              <p className="text-[#32475C99]/[60%] text-[16px] font-[400]">
+              <p className="text-[#32475C99]/[60%] text-[12px] md:text-[16px] font-[400]">
                 100k-500k
               </p>
             </span>
-            <span className="flex gap-[0.5rem]">
+            <span className="flex items-center gap-[0.5rem]">
               <h6 className="text-[#32475C99]/[60%] text-[16px] font-[700]">
                 Pet:
               </h6>
-              <p className="text-[#32475C99]/[60%] text-[16px] font-[400]">
+              <p className="text-[#32475C99]/[60%] text-[12px] md:text-[16px] font-[400]">
                 Cat
               </p>
             </span>
-            <span className="flex gap-[0.5rem]">
+            <span className="flex items-center gap-[0.5rem]">
               <h6 className="text-[#32475C99]/[60%] text-[16px] font-[700]">
                 Gender:
               </h6>
-              <p className="text-[#32475C99]/[60%] text-[16px] font-[400]">
+              <p className="text-[#32475C99]/[60%] text-[12px] md:text-[16px] font-[400]">
                 Male
               </p>
             </span>
-            <span className="flex gap-[0.5rem]">
+            <span className="flex items-center gap-[0.5rem]">
               <h6 className="text-[#32475C99]/[60%] text-[16px] font-[700]">
                 Employment:
               </h6>
-              <p className="text-[#32475C99]/[60%] text-[16px] font-[400]">
+              <p className="text-[#32475C99]/[60%] text-[12px] md:text-[16px] font-[400]">
                 Self-employed
               </p>
             </span>

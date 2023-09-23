@@ -1,5 +1,4 @@
 "use client";
-import Registry from "../../registry";
 import HouseSeekerDetails from "@/components/house-seekers/house-seeker-details/HouseSeekerDetails";
 import BackIcon from "@/assets/icons/BackIcon";
 import { useRouter } from "next/navigation";
@@ -12,8 +11,8 @@ const Page = () => {
   const [toogle, setToogle] = useState(true);
   const [open, setOpen] = useState(false);
   return (
-    <Registry>
-      <div className="grid grid-cols-1 grid-rows-[10%_90%] w-[98%] mx-auto max-h-screen overflow-y-scroll py-[1%] gap-[1rem]">
+    <>
+      <div className="grid grid-cols-1 grid-rows-[10%_90%] w-[98%] mx-auto max-h-screen overflow-y-scroll py-[1%] gap-[0.5rem] md:gap-[1rem]">
         <div className="flex items-center justify-between gap-[0.5rem]">
           <span className="flex items-center gap-[0.5rem]">
             <BackIcon
@@ -41,7 +40,7 @@ const Page = () => {
         <HouseSeekerDetails />
       </div>
       <AccountModal open={open} setOpen={setOpen} />
-    </Registry>
+    </>
   );
 };
 

@@ -9,7 +9,7 @@ const PaymentRequests = () => {
         {arr.map((e, i) => (
           <div
             key={i}
-            className="p-[0.5rem] border border-[#D6DDEB] px-[20px] py-[13px] flex flexcol gap-[2rem]"
+            className="p-[0.5rem] border border-[#D6DDEB] px-[20px] py-[13px] flex flex-col md:flex-row gap-[2rem]"
           >
             <Image alt="avatar" src={room} />
             <div className="flex flex-col gap-[0.5rem]">

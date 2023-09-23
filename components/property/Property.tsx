@@ -16,7 +16,7 @@ import RoomIcon from "@/assets/icons/RoomIcon";
 import BathIcon from "@/assets/icons/BathIcon";
 const Property = () => {
   return (
-    <div className="w-[95%] mx-auto">
+    <div className="w-[95%] mx-auto flex flex-col gap-[0.5rem]">
       <div className="relative">
         <Carousel
           arrows={true}

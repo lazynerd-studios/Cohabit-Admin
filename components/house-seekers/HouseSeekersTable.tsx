@@ -57,7 +57,7 @@ const HouseSeekersTable = () => {
       ),
       dataIndex: "email",
       render: (email) => `${email}`,
-      width: "20%",
+      width: "25%",
     },
     {
       title: (
@@ -110,6 +110,7 @@ const HouseSeekersTable = () => {
         </Button>
       ),
       width: "20%",
+      fixed: "right",
     },
   ];
 
@@ -151,7 +152,7 @@ const HouseSeekersTable = () => {
     <Table
       columns={columns}
       //   rowKey={(record) => record.login.uuid}
-      scroll={{ y: 500 }}
+      scroll={{ y: 500, x: 800 }}
       dataSource={data}
       pagination={tableParams.pagination}
       loading={loading}

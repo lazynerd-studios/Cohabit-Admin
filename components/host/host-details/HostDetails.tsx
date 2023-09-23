@@ -60,7 +60,7 @@ const HostDetails = () => {
         setActiveKey(e);
       }}
       defaultActiveKey="1"
-      className="bg-[#FFF] profile-tab"
+      className="bg-[#FFF] profile-tab w-full"
     />
   );
 };

@@ -40,16 +40,16 @@ const HousesTable = () => {
   });
   const [currentFilter, setCurrentFilter] = useState("All Houses");
   const filter = [
-    { label: "All Houses", value: "All Houses" },
-    { label: "Open Houses", value: "Open Houses" },
-    { label: "Rented Houses", value: "Rented Houses" },
-    { label: "Verified Houses", value: "Verified Houses" },
-    { label: "Unverified Houses", value: "Unverified Houses" },
+    { label: "All", value: "All Houses" },
+    { label: "Open", value: "Open Houses" },
+    { label: "Rented", value: "Rented Houses" },
+    { label: "Verified", value: "Verified Houses" },
+    { label: "Unverified", value: "Unverified Houses" },
   ];
   const columns: ColumnsType<DataType> = [
     {
       title: (
-        <span className="flex items-center">
+        <span className="flex items-center w-full">
           <p>Property Name</p>
           <TableIcon />
         </span>
@@ -121,6 +121,7 @@ const HousesTable = () => {
         </Button>
       ),
       width: "20%",
+      fixed: "right",
     },
   ];
 
@@ -164,10 +165,11 @@ const HousesTable = () => {
         optionType="button"
         defaultValue={"All Houses"}
         onChange={(e) => setCurrentFilter(e.target.value)}
+        className="overflow-x-scroll"
       >
-        <div className="grid grid-cols-5 justify-start items-center gap-[0.5rem]">
+        <div className="flex md:grid md:grid-cols-5 justify-start items-center gap-[0.5rem] max-w-fit">
           {filter.map((e, i) => (
-            <div key={i}>
+            <div className="w-full" key={i}>
               <RadioButton
                 style={{
                   color:
@@ -187,7 +189,7 @@ const HousesTable = () => {
       <Table
         columns={columns}
         //   rowKey={(record) => record.login.uuid}
-        scroll={{ y: 500 }}
+        scroll={{ y: 500, x: 800 }}
         dataSource={data}
         pagination={tableParams.pagination}
         loading={loading}

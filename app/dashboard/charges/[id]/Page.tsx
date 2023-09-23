@@ -1,5 +1,5 @@
 "use client";
-import Registry from "../../registry";
+import Registry from "../../template";
 import BackIcon from "@/assets/icons/BackIcon";
 import { useRouter } from "next/navigation";
 import ChargesDetails from "@/components/charges/ChargesDetails";

@@ -9,7 +9,7 @@ import ProfileSection2 from "./ProfileSection2";
 
 const HostProfileSection = () => {
   return (
-    <div className="grid grid-cols-[70%_30%] w-full py-[1rem]">
+    <div className="grid grid-cols-1 md:grid-cols-[70%_30%] w-full md:py-[1rem]">
       <div className="flex flex-col gap-[0.5rem]">
         <div className="p-[0.5rem] border border-[#D6DDEB] px-[20px] py-[13px] flex flex-col gap-[0.3rem]">
           <h4 className="text-[#25324B] text-[24px] font-[700]">Details</h4>
@@ -44,7 +44,7 @@ const HostProfileSection = () => {
               dots={{ className: "text-[#010886] carouselBtn" }}
               dotPosition="bottom"
               variableWidth
-              className=""
+              className="max-h-[250px]"
             >
               <div className="w-fit p-[1rem] flex flex-row gap-[0.2rem]">
                 <Image alt="apartment" src={room} />
@@ -108,7 +108,7 @@ const HostProfileSection = () => {
               dots={{ className: "text-[#010886] carouselBtn" }}
               dotPosition="bottom"
               variableWidth
-              className=""
+              className="max-h-[250px]"
             >
               <div className="w-fit p-[1rem] flex flex-row gap-[0.2rem]">
                 <Image alt="apartment" src={room} />

@@ -81,7 +81,23 @@ body {
 }
 
 .profile-tab {
-  padding-right: 0.5rem !important;
-  padding-left: 0.5rem !important;
+  padding-right: 0rem !important;
+  padding-left: 0rem !important;
   overflow-y: scroll !important;
+}
+@media (min-width: 768px) {
+  .profile-tab {
+    padding-right: 0.5rem !important;
+    padding-left: 0.5rem !important;
+    overflow-y: scroll !important;
+  }
+}
+
+.mobile-hidden {
+  display: none !important;
+}
+@media (min-width: 768px) {
+  .mobile-hidden {
+    display: block !important;
+  }
 }

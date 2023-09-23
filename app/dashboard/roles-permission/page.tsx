@@ -1,12 +1,7 @@
-import Registry from "../registry";
 import Roles from "@/components/roles-permissions/Roles";
 
 const page = () => {
-  return (
-    <Registry>
-      <Roles />
-    </Registry>
-  );
+  return <Roles />;
 };
 
 export default page;

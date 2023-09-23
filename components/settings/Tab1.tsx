@@ -44,9 +44,8 @@ const Tab1 = () => {
             src={Avatar}
           />
           <Upload {...props}>
-            <div className="flex flex-col items-center p-[0.2rem] md:p-[0.5rem]">
-              <JpgIcon className="hidden md:block" />
-              <span className="flex flex-col md:flex-row items-center gap-[0.2rem] text-[10px] md:text-[16px] font-[400]">
+            <div className="flex flex-col items-center p-[0.1rem] md:p-[0.5rem]">
+              <span className="flex flex-col md:flex-row items-center gap-[0.1rem] text-[10px] md:text-[16px] font-[400]">
                 <p className="text-colorPriary text[12px] md:text[16px]">
                   Click to replace or drag and drop
                 </p>
