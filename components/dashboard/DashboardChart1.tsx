@@ -8,7 +8,7 @@ import { CustomProgress as Progress } from "@/lib/AntDesignComponents";
 
 const DashboardChart1 = () => {
   return (
-    <div className="grid grid-cols-[65%_34%] justify-between gap-[0.5rem] w[98%] mxauto">
+    <div className="grid grid-cols-1 md:grid-cols-[65%_34%] justify-between gap-[0.5rem] w[98%] mxauto">
       <div className="grid grid-cols-[60%_40%] bg-[#FFF] rounded-[8px] shadow-[#32475C8A]/[54%] p-[2%]">
         <div className="w-full grid grid-cols-1 px-[2%]">
           <div className="flex items-start justify-between">

@@ -7,7 +7,7 @@ import { CustomRate as Rate } from "@/lib/AntDesignComponents";
 
 const DashboardChart2 = () => {
   return (
-    <div className="grid grid-cols-3 gap-[0.5rem] w[98%] mxauto">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-[0.5rem] w[98%] mxauto">
       <div className="w-full grid grid-cols-1 p-[2%] bg-[#FFF] rounded-[8px] shadow-[#32475C8A]/[54%]">
         <div className="flex items-start justify-between">
           <span className="flex flex-col gap-[0.3rem]">
