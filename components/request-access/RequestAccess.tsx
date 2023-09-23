@@ -18,7 +18,7 @@ const RequestAccess = () => {
     });
   };
   return (
-    <div className="grid grid-cols-1 gap-[1.5rem] w-[35%] mx-auto p-[1rem] rounded-[8px] bg-[#FFF] shadow-sm">
+    <div className="grid grid-cols-1 gap-[1.5rem] w-[98%] md:w-[35%] mx-auto p-[1rem] rounded-[8px] bg-[#FFF] shadow-sm">
       <div className="flex flex-col gap-[0.2rem]">
         <h2 className="text-[24px] font-[400] text-[#32475CDE]/[87%]">
           Request Access ✉️
