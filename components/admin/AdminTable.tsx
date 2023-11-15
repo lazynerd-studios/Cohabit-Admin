@@ -139,6 +139,7 @@ const AdminTable = () => {
     }
   };
 
+
   return (
     <>
       <div className="grid grid-cols-1 gap-[0.5rem]">

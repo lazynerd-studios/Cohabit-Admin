@@ -4,8 +4,12 @@ import SimpleLineChart from "./TinylineChart";
 import LineCharts from "./LineChart";
 import ArrowUp from "@/assets/icons/ArrowUp";
 import { CustomRate as Rate } from "@/lib/AntDesignComponents";
+import { useAppSelector } from "@/redux/hooks";
 
 const DashboardChart2 = () => {
+  const dashboard = useAppSelector((state) => state?.dashboard.dashboardData);
+
+  console.log(dashboard);
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-[0.5rem] w[98%] mxauto">
       <div className="w-full grid grid-cols-1 p-[2%] bg-[#FFF] rounded-[8px] shadow-[#32475C8A]/[54%]">
