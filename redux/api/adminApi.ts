@@ -54,8 +54,7 @@ export const adminApi = createApi({
       providesTags: ["AdminUser"],
     }),
     getAdminHouseListings: builder.query({
-      query: ({ open, verified, rented }) =>
-        `admin/listings?open&verified=${verified}&rented=${rented}`,
+      query: ({ path }) => `${path}`,
       providesTags: ["AdminHouseListing"],
     }),
     getAdminHouseListing: builder.query({

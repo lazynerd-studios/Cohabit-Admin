@@ -7,6 +7,7 @@ import { useGetDashboardStatsQuery } from "@/redux/api/adminApi";
 import { Spinner } from "../Spinner";
 import { useAppDispatch } from "@/redux/hooks";
 import { SET_DASHBOARD } from "@/redux/slice/dashboardSlice";
+import { todayDate } from "@/utils/TodayDate";
 
 const Dashboard = () => {
   const dispatch = useAppDispatch();
@@ -21,16 +22,6 @@ const Dashboard = () => {
       console.log(error);
     }
   }, [dispatch, error, isError, isSuccess, stats]);
-
-  // To get today's date
-  const date = new Date();
-  const options: Record<string, any> = {
-    month: 'long',
-    day: 'numeric',
-    year: 'numeric'
-  };
-
-  const todayDate = date.toLocaleString('en-US', options);
 
   const totalApartments = Number(statsData?.total_houses_posted) + Number(statsData?.total_houses_verified);
 

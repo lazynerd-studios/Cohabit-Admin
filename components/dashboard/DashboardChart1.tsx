@@ -7,7 +7,6 @@ import { useAppSelector } from "@/redux/hooks";
 const DashboardChart1 = () => {
   const dashboard = useAppSelector((state) => state?.dashboard.dashboardData);
 
-  console.log(dashboard);
   return (
     <div className="grid grid-cols-1 md:grid-cols-[65%_34%] justify-between gap-[0.5rem] w[98%] mxauto">
       <div className="grid grid-cols-[60%_40%] bg-[#FFF] rounded-[8px] shadow-[#32475C8A]/[54%] p-[2%]">
@@ -78,13 +77,13 @@ const DashboardChart1 = () => {
             <h6 className="text-[#32475C99]/[60%] text-[16px] font-[400]">
               Total House Posted
             </h6>
-            <h4 className="text-[24px] font-[500]">42,389</h4>
+            <h4 className="text-[24px] font-[500]">{dashboard?.total_houses_posted}</h4>
           </div>
           <div className="rounded-[8px] bg-[#FFF] shadow-sm text-center flex flex-col gap-[1rem] p-[1%]">
             <h6 className="text-[#32475C99]/[60%] text-[16px] font-[400]">
-              Total House Posted
+              Total House Verified
             </h6>
-            <h4 className="text-[24px] font-[500]">42,389</h4>
+            <h4 className="text-[24px] font-[500]">{dashboard?.total_houses_verified}</h4>
           </div>
         </div>
         <div className="p-[2%] bg-[#FFF] shadow-sm flex flex-col rounded-[8px]">

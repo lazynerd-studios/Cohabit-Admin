@@ -10,12 +10,16 @@ import {
 } from "@/lib/AntDesignComponents";
 import type { ColumnsType, TablePaginationConfig } from "antd/es/table";
 import TableIcon from "@/assets/icons/TableIcon";
+import { useGetAdminHouseListingsQuery } from "@/redux/api/adminApi";
+import moment from "moment";
 
 interface DataType {
-  name: string;
+  id: number;
+  house_type_name: string;
   status: string;
-  email: string;
-  date: string;
+  created_at: string;
+  price: string;
+  verification: string;
 }
 
 interface TableParams {
@@ -46,6 +50,24 @@ const HousesTable = () => {
     { label: "Verified", value: "Verified Houses" },
     { label: "Unverified", value: "Unverified Houses" },
   ];
+
+  const [path, setPath] = useState<string>("admin/listings");
+  const [count, setCount] = useState<number>(20);
+  const [page, setPage] = useState<number>(1);
+  const { data: houses, isSuccess, isError, error, isLoading } = useGetAdminHouseListingsQuery({
+    path
+  })
+
+  useEffect(() => {
+    if (isSuccess) {
+      setCount(houses?.per_page);
+      setPage(houses?.current_page);
+      setData(houses?.data);
+      console.log(houses);
+
+      // setData(houses?.data?.listings);
+    }
+  }, [houses, isSuccess])
   const columns: ColumnsType<DataType> = [
     {
       title: (
@@ -54,8 +76,8 @@ const HousesTable = () => {
           <TableIcon />
         </span>
       ),
-      dataIndex: "name",
-      render: (name) => `${name}`,
+      dataIndex: "house_type_name",
+      render: (house_type_name) => `${house_type_name}`,
       width: "20%",
     },
     {
@@ -65,8 +87,8 @@ const HousesTable = () => {
           <TableIcon />
         </span>
       ),
-      dataIndex: "amount",
-      render: (amount) => `${amount}`,
+      dataIndex: "price",
+      render: (price) => `${price}`,
       width: "20%",
     },
     {
@@ -88,7 +110,7 @@ const HousesTable = () => {
         </span>
       ),
       dataIndex: "date",
-      render: (date) => `${date}`,
+      render: (created_at) => `${moment(created_at).format("DD/MM/YYYY")}`,
       width: "20%",
     },
     {
@@ -113,7 +135,8 @@ const HousesTable = () => {
       render: (id) => (
         <Button
           onClick={() => {
-            push("houses-posted/1");
+            push(`houses-posted/${id}`);
+            sessionStorage.setItem("houseId", id.toString());
           }}
           className="text-[14px] font-[600] solid-action-btn"
         >
@@ -124,29 +147,6 @@ const HousesTable = () => {
       fixed: "right",
     },
   ];
-
-  const fetchData = () => {
-    setLoading(true);
-    fetch(`https://run.mocky.io/v3/e6dd2705-996e-49c9-8141-0835a389fbfa`)
-      .then((res) => res.json())
-      .then((results) => {
-        setData(results);
-        setLoading(false);
-        setTableParams({
-          ...tableParams,
-          pagination: {
-            ...tableParams.pagination,
-            total: 200,
-            // 200 is mock data, you should read it from server
-            // total: data.totalCount,
-          },
-        });
-      });
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, [JSON.stringify(tableParams), currentFilter]);
 
   const handleTableChange = (pagination: TablePaginationConfig) => {
     setTableParams({
