@@ -23,16 +23,9 @@ interface TableParams {
   pagination?: TablePaginationConfig;
 }
 
-const getRandomuserParams = (params: TableParams) => ({
-  results: params.pagination?.pageSize,
-  page: params.pagination?.current,
-  ...params,
-});
-
 const HouseSeekersTable = () => {
   const { push } = useRouter();
   const [data, setData] = useState<DataType[]>();
-  const [loading, setLoading] = useState(false);
 
   const [page, setPage] = useState<number>(1);
   const [count, setCount] = useState<number>(10);

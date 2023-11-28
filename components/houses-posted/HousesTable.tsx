@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import qs from "querystring";
 import { useRouter } from "next/navigation";
 import {
@@ -12,6 +12,7 @@ import type { ColumnsType, TablePaginationConfig } from "antd/es/table";
 import TableIcon from "@/assets/icons/TableIcon";
 import { useGetAdminHouseListingsQuery } from "@/redux/api/adminApi";
 import moment from "moment";
+import { RadioChangeEvent } from "antd";
 
 interface DataType {
   id: number;
@@ -26,48 +27,78 @@ interface TableParams {
   pagination?: TablePaginationConfig;
 }
 
-const getRandomuserParams = (params: TableParams) => ({
-  results: params.pagination?.pageSize,
-  page: params.pagination?.current,
-  ...params,
-});
 
 const HousesTable = () => {
   const { push } = useRouter();
   const [data, setData] = useState<DataType[]>();
   const [loading, setLoading] = useState(false);
-  const [tableParams, setTableParams] = useState<TableParams>({
-    pagination: {
-      current: 1,
-      pageSize: 10,
-    },
-  });
-  const [currentFilter, setCurrentFilter] = useState("All Houses");
-  const filter = [
-    { label: "All", value: "All Houses" },
-    { label: "Open", value: "Open Houses" },
-    { label: "Rented", value: "Rented Houses" },
-    { label: "Verified", value: "Verified Houses" },
-    { label: "Unverified", value: "Unverified Houses" },
-  ];
+
+  const [verifyFilter, setVerifyFilter] = useState<string>();
+  const [openFilter, setOpenFilter] = useState<string>();
 
   const [path, setPath] = useState<string>("admin/listings");
+  const verifiedFilterOptions = [
+    { label: "All", value: "" },
+    { label: "Verified", value: "1" },
+    { label: "Unverified", value: "0" },
+  ];
+  const openFilterOptions = [
+    { label: "All", value: "" },
+    { label: "Rented", value: "rented" },
+    { label: "Available", value: "available" },
+    { label: "Sold", value: "sold" },
+
+  ];
   const [count, setCount] = useState<number>(20);
   const [page, setPage] = useState<number>(1);
   const { data: houses, isSuccess, isError, error, isLoading } = useGetAdminHouseListingsQuery({
     path
   })
 
+  const handleOpenFilterChange = useCallback((e: RadioChangeEvent) => setOpenFilter(e.target.value), []);
+  const handleVerifyFilterChange = useCallback((e: RadioChangeEvent) => setVerifyFilter(e.target.value), []);
+
+  const handleResetFilters = () => {
+    setVerifyFilter(undefined);
+    setOpenFilter(undefined);
+    setPath("admin/listings");
+  };
   useEffect(() => {
     if (isSuccess) {
       setCount(houses?.per_page);
       setPage(houses?.current_page);
       setData(houses?.data);
-      console.log(houses);
-
-      // setData(houses?.data?.listings);
     }
-  }, [houses, isSuccess])
+
+    if (verifyFilter) {
+      setPath(`admin/listings?rented=${openFilter}`)
+    }
+    if (openFilter) {
+      setPath(`admin/listings?verified=${verifyFilter}`)
+    }
+
+    if (!verifyFilter && !openFilter) {
+      setPath(`admin/listings`)
+    }
+
+    if (verifyFilter && openFilter) {
+      setPath(`admin/listings?verified=${verifyFilter}&rented=${openFilter}`)
+    }
+
+    if (isError) {
+      console.log(error);
+    }
+  }, [error, houses, isError, isSuccess, openFilter, verifyFilter])
+
+
+  console.log(verifyFilter, openFilter);
+
+  const [tableParams, setTableParams] = useState<TableParams>({
+    pagination: {
+      current: page,
+      pageSize: count,
+    },
+  });
   const columns: ColumnsType<DataType> = [
     {
       title: (
@@ -161,38 +192,64 @@ const HousesTable = () => {
 
   return (
     <div className="grid grid-cols-1">
-      <RadioGroup
-        optionType="button"
-        defaultValue={"All Houses"}
-        onChange={(e) => setCurrentFilter(e.target.value)}
-        className="overflow-x-scroll"
-      >
-        <div className="flex md:grid md:grid-cols-5 justify-start items-center gap-[0.5rem] max-w-fit">
-          {filter.map((e, i) => (
-            <div className="w-full" key={i}>
-              <RadioButton
-                style={{
-                  color:
-                    currentFilter === e.value
-                      ? "#FFF"
-                      : "rgba(50, 71, 92, 0.87)",
-                }}
-                value={e.value}
-                key={i}
-              >
-                {e.label}
-              </RadioButton>
-            </div>
-          ))}
-        </div>
-      </RadioGroup>
+      <div className="flex items-center gap-[2rem] my-[1.2rem]">
+        <span className="text-[16px] font-[600] text-[#32475C] cursor-pointer" onClick={
+          handleResetFilters
+        }>Reset Filters</span>
+        <RadioGroup
+          optionType="button"
+          onChange={handleOpenFilterChange}
+
+        >
+          <div className="flex  justify-start items-center gap-[0.5rem] max-w-fit">
+            {openFilterOptions?.map((e, i) => (
+              <div className="w-full" key={i}>
+                <RadioButton
+                  style={{
+                    color:
+                      openFilter === e.value
+                        ? "#FFF"
+                        : "rgba(50, 71, 92, 0.87)",
+                  }}
+                  value={e.value}
+                  key={i}
+                >
+                  {e.label}
+                </RadioButton>
+              </div>
+            ))}
+          </div>
+        </RadioGroup>
+        <RadioGroup
+          optionType="button"
+          onChange={handleVerifyFilterChange}
+        >
+          <div className="flex  justify-start items-center gap-[0.5rem] max-w-fit">
+            {verifiedFilterOptions?.map((e, i) => (
+              <div className="w-full" key={i}>
+                <RadioButton
+                  style={{
+                    color:
+                      verifyFilter === e.value
+                        ? "#FFF"
+                        : "rgba(50, 71, 92, 0.87)",
+                  }}
+                  value={e.value}
+                  key={i}
+                >
+                  {e.label}
+                </RadioButton>
+              </div>
+            ))}
+          </div>
+        </RadioGroup>
+      </div>
       <Table
         columns={columns}
-        //   rowKey={(record) => record.login.uuid}
-        scroll={{ y: 500, x: 800 }}
+        scroll={{ y: 600, x: 800 }}
         dataSource={data}
-        pagination={tableParams.pagination}
-        loading={loading}
+        pagination={tableParams?.pagination}
+        loading={isLoading}
         onChange={handleTableChange}
       />
     </div>

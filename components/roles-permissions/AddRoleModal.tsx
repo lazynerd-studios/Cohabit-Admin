@@ -4,7 +4,12 @@ import {
   CustomSelect as Select,
   CustomDatePicker as DatePicker,
   CustomInlineInput as Input,
+  CustomTextArea,
 } from "@/lib/AntDesignComponents";
+import { useCreateRoleMutation } from "@/redux/api/adminApi";
+import { message } from "antd";
+
+import { useEffect, useState } from "react";
 type modalProps = {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -13,6 +18,32 @@ const AddRoleModal = ({ open, setOpen }: modalProps) => {
   const handleCancel = () => {
     setOpen(false);
   };
+
+  const [roleName, setRoleName] = useState<string>("");
+  const [desc, setDesc] = useState<string>("");
+
+  const [createRole, { isLoading, isSuccess, isError, error }] = useCreateRoleMutation()
+
+  const onHandleAddRole = async () => {
+    if (!roleName || !desc) {
+      message.error("Please fill in all fields")
+      return
+    }
+
+    if (roleName && desc) {
+      await createRole({ name: roleName, description: desc })
+    }
+  }
+
+  useEffect(() => {
+    if (isSuccess) {
+      message.success("Role created successfully")
+      setOpen(false)
+    }
+    if (isError) {
+      console.log(error)
+    }
+  }, [error, isError, isSuccess])
   return (
     <Modal
       className="rounded-[10px] w-full md:w-[40%]"
@@ -30,45 +61,20 @@ const AddRoleModal = ({ open, setOpen }: modalProps) => {
           >
             What do you want to call this role
           </label>
-          <Input placeholder="Name" id="role-title" />
+          <Input placeholder="Name" id="role-title" value={roleName} onChange={(e) => setRoleName(e.target.value)} />
         </span>
         <span className="flex flex-col">
           <label
             htmlFor="email"
             className="text-[#25324B] text-[14px] font-[400]"
           >
-            Email Address
+            Descripton of role
           </label>
-          <Input placeholder="email" type="email" id="email" />
+          <CustomTextArea placeholder="description" id="description" value={desc} onChange={(e) => setDesc(e.target.value)} />
         </span>
-        <span className="flex flex-col">
-          <label
-            htmlFor="name"
-            className="text-[#25324B] text-[14px] font-[400]"
-          >
-            Select Role
-          </label>
-          <Select placeholder="Name" id="name" />
-        </span>
-        <span className="flex flex-col">
-          <label
-            htmlFor="phone"
-            className="text-[#25324B] text-[14px] font-[400]"
-          >
-            Phone Number
-          </label>
-          <Input placeholder="+000 00 000" id="phone" />
-        </span>
-        <span className="flex flex-col">
-          <label
-            htmlFor="date"
-            className="text-[#25324B] text-[14px] font-[400]"
-          >
-            Date Of Birth
-          </label>
-          <DatePicker placeholder="date of birth" id="date" />
-        </span>
-        <Button className="solid-btn mt-[0.5rem]" type="primary">
+
+
+        <Button className="solid-btn mt-[0.5rem]" type="primary" loading={isLoading} onClick={onHandleAddRole}  >
           Submit
         </Button>
       </div>

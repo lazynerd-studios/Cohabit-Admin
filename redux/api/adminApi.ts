@@ -16,6 +16,7 @@ export const adminApi = createApi({
     "AdminHouseListingDetails",
     "Admins",
     "Roles",
+    "userRoles",
   ],
   endpoints: (builder) => ({
     adminLogin: builder.mutation({
@@ -61,12 +62,16 @@ export const adminApi = createApi({
       query: ({ id }) => `admin/listings/${id}`,
       providesTags: ["AdminHouseListingDetails"],
     }),
+    getUserRoles: builder.query({
+      query: () => `admin/permissions/users`,
+      providesTags: ["userRoles"],
+    }),
     getAdmins: builder.query({
       query: () => `admin/permissions/users`,
       providesTags: ["Admins"],
     }),
     getRoles: builder.query({
-      query: () => `admin/permissions/users`,
+      query: () => `admin/permissions/roles`,
       providesTags: ["Roles"],
     }),
     createAdmin: builder.mutation({
@@ -110,4 +115,5 @@ export const {
   useCreateRoleMutation,
   useUpdateRoleMutation,
   useCreateAdminMutation,
+  useGetUserRolesQuery,
 } = adminApi;

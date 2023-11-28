@@ -1,3 +1,4 @@
+import { todayDate } from "@/utils/TodayDate";
 import AdminTable from "./AdminTable";
 
 const Admin = () => {
@@ -8,7 +9,7 @@ const Admin = () => {
           Admin
         </h2>
         <p className="text-[#32475C99]/[60%] text-[12px] md:text-[16px] font-[700]">
-          Showing your admin metrics for July 16,2023 - July 25,2023
+          Showing your admin metrics for {todayDate}
         </p>
       </div>
       <AdminTable />

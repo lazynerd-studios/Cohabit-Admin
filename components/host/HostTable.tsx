@@ -8,6 +8,7 @@ import {
 } from "@/lib/AntDesignComponents";
 import type { ColumnsType, TablePaginationConfig } from "antd/es/table";
 import TableIcon from "@/assets/icons/TableIcon";
+// import { useGetAdminHouseListingQuery } from "@/redux/api/adminApi";
 
 interface DataType {
   name: string;
@@ -30,6 +31,24 @@ const HostTable = () => {
   const { push } = useRouter();
   const [data, setData] = useState<DataType[]>();
   const [loading, setLoading] = useState(false);
+
+  // const [page, setPage] = useState<number>(1);
+  // const [count, setCount] = useState<number>(10);
+  // const { data: stats, isSuccess, isError, error, isLoading } = useGetAdminHouseListingQuery({
+  //   count,
+  //   page
+  // });
+
+  // useEffect(() => {
+  //   if (isSuccess) {
+  //     setData(stats?.data ?? []);
+  //     setCount(stats?.per_page);
+  //     setPage(stats?.current_page);
+  //   }
+  //   if (isError) {
+  //     console.log(error);
+  //   }
+  // }, [error, isError, isSuccess, stats]);
   const [tableParams, setTableParams] = useState<TableParams>({
     pagination: {
       current: 1,
