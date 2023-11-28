@@ -3,9 +3,9 @@ import PhoneIcon from "@/assets/icons/PhoneIcon";
 import LanguageIcon from "@/assets/icons/LanguageIcon";
 
 interface IProps {
-  data: Record<string, any>;
+  data?: Record<string, any>;
 }
-const ProfileSection2 = ({ data }: IProps) => {
+const ProfileSection2: React.FC<IProps> = ({ data }: IProps) => {
   return (
     <div className="flex flex-col gap-[0.5rem] w-full md:w-[95%] mx-auto">
       <div className="py-[1rem] border border-[#D6DDEB] px-[20px] flex flex-col gap-[0.3rem]">
