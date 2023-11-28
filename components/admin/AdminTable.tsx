@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import qs from "querystring";
 import { useRouter } from "next/navigation";
 import {
@@ -14,12 +14,15 @@ import EditIcon from "@/assets/icons/EditIcon";
 import FilterIcon from "@/assets/icons/FilterIcon";
 import SearchIcon from "@/assets/icons/SearchIcon";
 import AddAdminModal from "./AddAdminModal";
+import { useGetAdminsQuery } from "@/redux/api/adminApi";
+import moment from "moment";
+import { debounce } from "lodash"
 
 interface DataType {
   name: string;
-  status: string;
+  user_type: boolean;
   email: string;
-  date: string;
+  created_at: string;
 }
 
 interface TableParams {
@@ -36,11 +39,24 @@ const AdminTable = () => {
   const { push } = useRouter();
   const [open, setOpen] = useState(false);
   const [data, setData] = useState<DataType[]>();
-  const [loading, setLoading] = useState(false);
+
+  const { data: stats, isSuccess, isError, error, isLoading } = useGetAdminsQuery({})
+
+  useEffect(() => {
+    if (isSuccess) {
+      setData(stats?.data ?? []);
+    }
+    if (isError) {
+      console.log(error);
+    }
+  }, [error, isError, isSuccess, stats]);
+
+
   const [tableParams, setTableParams] = useState<TableParams>({
     pagination: {
       current: 1,
       pageSize: 10,
+      total: stats?.length,
     },
   });
   const columns: ColumnsType<DataType> = [
@@ -63,12 +79,12 @@ const AdminTable = () => {
     {
       title: (
         <span className="flex items-center">
-          <p>Role</p>
+          <p>Gender</p>
           <TableIcon />
         </span>
       ),
-      dataIndex: "role",
-      render: (role) => `${role}`,
+      dataIndex: "user_type",
+      render: (user_type) => `${user_type}`,
       width: "20%",
     },
     {
@@ -78,8 +94,8 @@ const AdminTable = () => {
           <TableIcon />
         </span>
       ),
-      dataIndex: "active",
-      render: (active) => `${active}`,
+      dataIndex: "created-at",
+      render: (created_at) => `${moment(created_at).format("DD/MM/YYYY")}`,
       width: "20%",
     },
     {
@@ -92,7 +108,7 @@ const AdminTable = () => {
       dataIndex: "status",
       render: (status) => (
         <span className="p-[3%] rounded-[80px] bg-[#2AD0621A]/[10%] text-[14px] font-[400]">
-          {status}
+          {status === null ? "Pending" : "Active"}
         </span>
       ),
       width: "15%",
@@ -105,28 +121,6 @@ const AdminTable = () => {
     { dataIndex: "_id", render: (id) => "...", width: "10%", fixed: "right" },
   ];
 
-  const fetchData = () => {
-    setLoading(true);
-    fetch(`https://testapi.io/api/sikiru/cohabit-admin`)
-      .then((res) => res.json())
-      .then((results) => {
-        setData(results);
-        setLoading(false);
-        setTableParams({
-          ...tableParams,
-          pagination: {
-            ...tableParams.pagination,
-            total: 200,
-            // 200 is mock data, you should read it from server
-            // total: data.totalCount,
-          },
-        });
-      });
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, [JSON.stringify(tableParams)]);
 
   const handleTableChange = (pagination: TablePaginationConfig) => {
     setTableParams({
@@ -139,22 +133,50 @@ const AdminTable = () => {
     }
   };
 
+  const [search, setSearch] = useState<string>("")
+
+
+  const debouncedSearch = useCallback(
+    debounce((searchText: string) => {
+      if (!searchText) {
+        setData(stats?.data ?? []);
+        return;
+      }
+      const filteredData = (stats?.data || []).filter((permission: Record<string, any>) =>
+        permission?.name?.toLowerCase().includes(searchText.toLowerCase())
+      );
+      setData(filteredData);
+    }, 500), // Adjust the debounce delay (in milliseconds) according to your preference
+    [stats?.data]
+  );
+
+  const handleAdminSearch = (searchText: string) => {
+    setSearch(searchText);
+    debouncedSearch(searchText);
+
+  }
+
+  useEffect(() => {
+    handleAdminSearch(search);
+  }, [handleAdminSearch, search]);
   return (
     <>
       <div className="grid grid-cols-1 gap-[0.5rem]">
         <div className="grid grid-cols-1 md:grid-cols-2">
           <span className="text-[#25324B] text-[20px] font-[700]">
-            10 Admins
+            {data?.length} Admins
           </span>
           <div className="flex items-center gap-[0.5rem]">
             <Input
               placeholder="Search Admins"
+              value={search}
+              onChange={(e) => handleAdminSearch(e.target.value)}
               prefix={<SearchIcon className="stroke-[#A8ADB7]" />}
             />
-            <span className="flex items-center gap-[0.5rem] border border-[#D6DDEB] p-[1%] rounded-[6px]">
+            {/* <span className="flex items-center gap-[0.5rem] border border-[#D6DDEB] p-[1%] rounded-[6px]">
               <FilterIcon />
               <p className="text-[#25324B] text-[16px] font-[400]">Filter</p>
-            </span>
+            </span> */}
             <PrimaryButton
               onClick={() => {
                 setOpen(true);
@@ -168,11 +190,10 @@ const AdminTable = () => {
         </div>
         <Table
           columns={columns}
-          //   rowKey={(record) => record.login.uuid}
-          scroll={{ y: 500, x: 800 }}
+          scroll={{ y: 600, x: 800 }}
           dataSource={data}
           pagination={tableParams.pagination}
-          loading={loading}
+          loading={isLoading}
           onChange={handleTableChange}
         />
       </div>

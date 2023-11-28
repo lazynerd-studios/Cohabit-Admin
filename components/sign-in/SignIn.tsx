@@ -5,11 +5,37 @@ import {
   CustomCheckBox as Checkbox,
   AuthButton as Button,
 } from "@/lib/AntDesignComponents";
-import { ChangeEventHandler, useState } from "react";
+import { ChangeEventHandler, SyntheticEvent, useState, useEffect } from "react";
 import Link from "next/link";
+import { useAdminLoginMutation } from "@/redux/api/adminApi";
+import { Spinner } from "../Spinner";
+import { message } from "antd";
+import { useRouter } from "next/navigation";
+import { useAppDispatch } from "@/redux/hooks";
+import { SET_TOKEN } from "@/redux/slice/userSlice";
 
 const SignIn = () => {
+  const { push } = useRouter()
+  const dispatch = useAppDispatch()
   const [formdata, setFormData] = useState({ email: "", password: "" });
+  const [adminLogin, { data, isLoading, error, isSuccess, isError }] = useAdminLoginMutation()
+
+  useEffect(() => {
+    if (isSuccess) {
+      message.success("Login Successful")
+      dispatch(SET_TOKEN(data?.data?.token))
+      sessionStorage.setItem("authToken", data?.data?.token)
+      push("/dashboard")
+    }
+    if (isError) {
+      const errMesg = error as any
+      message.error(errMesg?.data?.message)
+    }
+  }, [data, isSuccess, isError, error, push, dispatch])
+  const onSubmit = (e: SyntheticEvent) => {
+    e.preventDefault();
+    adminLogin(formdata)
+  }
   const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     const { name, value } = e.currentTarget;
     setFormData((prev) => {
@@ -37,9 +63,8 @@ const SignIn = () => {
         />
         <label
           htmlFor="email"
-          className={`text-[#0C1938] text-[16px] font-[700] floating-label ${
-            formdata.email && "focusedlabel"
-          }`}
+          className={`text-[#0C1938] text-[16px] font-[700] floating-label ${formdata.email && "focusedlabel"
+            }`}
         >
           Email
         </label>
@@ -55,9 +80,8 @@ const SignIn = () => {
         />
         <label
           htmlFor="password"
-          className={`text-[#0C1938] text-[16px] font-[700] floating-label ${
-            formdata.password && "focusedlabel"
-          }`}
+          className={`text-[#0C1938] text-[16px] font-[700] floating-label ${formdata.password && "focusedlabel"
+            }`}
         >
           password
         </label>
@@ -74,9 +98,11 @@ const SignIn = () => {
         </div>
         <Link href="reset-password">Forgot Password?</Link>
       </div>
-      <Button className="solid-btn" type="primary">
-        LOGIN
-      </Button>
+      {
+        isLoading ? <div> <Spinner /></div> : <Button className="solid-btn" type="primary" onClick={onSubmit}>
+          LOGIN
+        </Button>
+      }
     </div>
   );
 };

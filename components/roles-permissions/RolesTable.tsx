@@ -10,9 +10,10 @@ import {
 import type { ColumnsType, TablePaginationConfig } from "antd/es/table";
 import TableIcon from "@/assets/icons/TableIcon";
 import ExportIcon from "@/assets/icons/ExportIcon";
-import FilterIcon from "@/assets/icons/FilterIcon";
-import SearchIcon from "@/assets/icons/SearchIcon";
+
 import AddRoleModal from "./AddRoleModal";
+import { useGetUserRolesQuery } from "@/redux/api/adminApi";
+import { message } from "antd";
 
 interface DataType {
   name: string;
@@ -32,16 +33,13 @@ const getRandomuserParams = (params: TableParams) => ({
 });
 
 const RolesTable = () => {
-  const { push } = useRouter();
   const [open, setOpen] = useState(false);
   const [data, setData] = useState<DataType[]>();
   const [loading, setLoading] = useState(false);
-  const [tableParams, setTableParams] = useState<TableParams>({
-    pagination: {
-      current: 1,
-      pageSize: 10,
-    },
-  });
+  const { data: roleData, isSuccess: roleSuccess, isError: roleIsError, error: roleError } = useGetUserRolesQuery({})
+
+  const [roleSet, setRoleSet] = useState<Record<string, any>[]>([])
+
   const columns: ColumnsType<DataType> = [
     {
       title: (
@@ -69,30 +67,30 @@ const RolesTable = () => {
           <p>Role</p>
         </span>
       ),
-      dataIndex: "role",
-      render: (role) => `${role}`,
+      dataIndex: "user_type",
+      render: (user_type) => `${user_type}`,
       width: "25%",
     },
-    {
-      title: (
-        <span className="flex items-center">
-          <p>Status</p>
-          <TableIcon />
-        </span>
-      ),
-      dataIndex: "status",
-      render: (status) =>
-        status === "active" ? (
-          <span className="p-[3%] rounded-[80px] text-[#71DD37] bg-[#72E1281F]/[12%] text-[14px] font-[400]">
-            {status}
-          </span>
-        ) : (
-          <span className="p-[3%] rounded-[80px] text-[#FFAB00] bg-[#FDB5281F]/[12%] text-[14px] font-[400]">
-            {status}
-          </span>
-        ),
-      width: "15%",
-    },
+    // {
+    //   title: (
+    //     <span className="flex items-center">
+    //       <p>Status</p>
+    //       <TableIcon />
+    //     </span>
+    //   ),
+    //   dataIndex: "status",
+    //   render: (status) =>
+    //     status === "active" ? (
+    //       <span className="p-[3%] rounded-[80px] text-[#71DD37] bg-[#72E1281F]/[12%] text-[14px] font-[400]">
+    //         {status}
+    //       </span>
+    //     ) : (
+    //       <span className="p-[3%] rounded-[80px] text-[#FFAB00] bg-[#FDB5281F]/[12%] text-[14px] font-[400]">
+    //         {status}
+    //       </span>
+    //     ),
+    //   width: "15%",
+    // },
     {
       title: "Action",
       dataIndex: "_id",
@@ -102,28 +100,24 @@ const RolesTable = () => {
     },
   ];
 
-  const fetchData = () => {
-    setLoading(true);
-    fetch(`https://testapi.io/api/sikiru/roles`)
-      .then((res) => res.json())
-      .then((results) => {
-        setData(results);
-        setLoading(false);
-        setTableParams({
-          ...tableParams,
-          pagination: {
-            ...tableParams.pagination,
-            total: 200,
-            // 200 is mock data, you should read it from server
-            // total: data.totalCount,
-          },
-        });
-      });
-  };
-
   useEffect(() => {
-    fetchData();
-  }, [JSON.stringify(tableParams)]);
+    if (roleSuccess) {
+      setRoleSet(roleData?.data ?? [])
+    }
+
+    if (roleIsError) {
+      const errMesg = roleError as any
+      message.error(errMesg?.data?.message)
+    }
+  }, [roleData?.data, roleError, roleIsError, roleSuccess, setOpen])
+
+  const [tableParams, setTableParams] = useState<TableParams>({
+    pagination: {
+      current: 1,
+      pageSize: 10,
+      total: roleSet?.length,
+    },
+  });
 
   const handleTableChange = (pagination: TablePaginationConfig) => {
     setTableParams({
@@ -132,23 +126,23 @@ const RolesTable = () => {
 
     // `dataSource` is useless since `pageSize` changed
     if (pagination.pageSize !== tableParams.pagination?.pageSize) {
-      setData([]);
+      setRoleSet([]);
     }
   };
 
-  const rowSelection = {
-    onChange: (selectedRowKeys: React.Key[], selectedRows: DataType[]) => {
-      console.log(
-        `selectedRowKeys: ${selectedRowKeys}`,
-        "selectedRows: ",
-        selectedRows
-      );
-    },
-    getCheckboxProps: (record: DataType) => ({
-      disabled: record.name === "Disabled User", // Column configuration not to be checked
-      name: record.name,
-    }),
-  };
+  // const rowSelection = {
+  //   onChange: (selectedRowKeys: React.Key[], selectedRows: DataType[]) => {
+  //     console.log(
+  //       `selectedRowKeys: ${selectedRowKeys}`,
+  //       "selectedRows: ",
+  //       selectedRows
+  //     );
+  //   },
+  //   getCheckboxProps: (record: DataType) => ({
+  //     disabled: record.name === "Disabled User", // Column configuration not to be checked
+  //     name: record.name,
+  //   }),
+  // };
 
   return (
     <>
@@ -175,11 +169,11 @@ const RolesTable = () => {
         <Table
           columns={columns}
           //   rowKey={(record) => record.login.uuid}
-          rowSelection={{
-            ...rowSelection,
-          }}
+          // rowSelection={{
+          //   ...rowSelection,
+          // }}
           scroll={{ y: 500, x: 800 }}
-          dataSource={data}
+          dataSource={roleSet}
           pagination={tableParams.pagination}
           loading={loading}
           onChange={handleTableChange}

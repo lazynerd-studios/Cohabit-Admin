@@ -8,32 +8,47 @@ import {
 } from "@/lib/AntDesignComponents";
 import type { ColumnsType, TablePaginationConfig } from "antd/es/table";
 import TableIcon from "@/assets/icons/TableIcon";
+import { useGetAdminHouseSeekersDashboardQuery } from "@/redux/api/adminApi";
+import moment from "moment";
 
 interface DataType {
+  id: number
   name: string;
   status: string;
   email: string;
-  date: string;
+  created_at: string;
 }
 
 interface TableParams {
   pagination?: TablePaginationConfig;
 }
 
-const getRandomuserParams = (params: TableParams) => ({
-  results: params.pagination?.pageSize,
-  page: params.pagination?.current,
-  ...params,
-});
-
 const HouseSeekersTable = () => {
   const { push } = useRouter();
   const [data, setData] = useState<DataType[]>();
-  const [loading, setLoading] = useState(false);
+
+  const [page, setPage] = useState<number>(1);
+  const [count, setCount] = useState<number>(10);
+  const { data: stats, isSuccess, isError, error, isLoading } = useGetAdminHouseSeekersDashboardQuery({
+    count,
+    page
+  });
+
+  useEffect(() => {
+    if (isSuccess) {
+      setData(stats?.data ?? []);
+      setCount(stats?.per_page);
+      setPage(stats?.current_page);
+    }
+    if (isError) {
+      console.log(error);
+    }
+  }, [error, isError, isSuccess, stats]);
   const [tableParams, setTableParams] = useState<TableParams>({
     pagination: {
-      current: 1,
-      pageSize: 10,
+      current: page,
+      pageSize: count,
+      total: stats?.total,
     },
   });
   const columns: ColumnsType<DataType> = [
@@ -77,8 +92,8 @@ const HouseSeekersTable = () => {
           <TableIcon />
         </span>
       ),
-      dataIndex: "date",
-      render: (date) => `${date}`,
+      dataIndex: "created_at",
+      render: (created_at) => `${moment(created_at).format("DD/MM/YYYY")}`,
       width: "20%",
     },
     {
@@ -102,7 +117,8 @@ const HouseSeekersTable = () => {
       render: (id) => (
         <Button
           onClick={() => {
-            push("house-seekers/1");
+            push(`house-seekers/${id}`);
+            sessionStorage.setItem("houseSeekerId", id.toString());
           }}
           className="text-[14px] font-[600] solid-action-btn"
         >
@@ -114,28 +130,28 @@ const HouseSeekersTable = () => {
     },
   ];
 
-  const fetchData = () => {
-    setLoading(true);
-    fetch(`https://run.mocky.io/v3/ef246f8b-78f9-4163-9d75-61e8650ed255`)
-      .then((res) => res.json())
-      .then((results) => {
-        setData(results);
-        setLoading(false);
-        setTableParams({
-          ...tableParams,
-          pagination: {
-            ...tableParams.pagination,
-            total: 200,
-            // 200 is mock data, you should read it from server
-            // total: data.totalCount,
-          },
-        });
-      });
-  };
+  // const fetchData = () => {
+  //   setLoading(true);
+  //   fetch(`https://run.mocky.io/v3/ef246f8b-78f9-4163-9d75-61e8650ed255`)
+  //     .then((res) => res.json())
+  //     .then((results) => {
+  //       setData(results);
+  //       setLoading(false);
+  //       setTableParams({
+  //         ...tableParams,
+  //         pagination: {
+  //           ...tableParams.pagination,
+  //           total: 200,
+  //           // 200 is mock data, you should read it from server
+  //           // total: data.totalCount,
+  //         },
+  //       });
+  //     });
+  // };
 
-  useEffect(() => {
-    fetchData();
-  }, [JSON.stringify(tableParams)]);
+  // useEffect(() => {
+  //   fetchData();
+  // }, [JSON.stringify(tableParams)]);
 
   const handleTableChange = (pagination: TablePaginationConfig) => {
     setTableParams({
@@ -155,7 +171,7 @@ const HouseSeekersTable = () => {
       scroll={{ y: 500, x: 800 }}
       dataSource={data}
       pagination={tableParams.pagination}
-      loading={loading}
+      loading={isLoading}
       onChange={handleTableChange}
     />
   );

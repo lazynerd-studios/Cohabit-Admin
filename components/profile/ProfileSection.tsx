@@ -1,23 +1,46 @@
+/* eslint-disable @next/next/no-img-element */
 import Image from "next/image";
 import room from "@/assets/room.jpg";
-import Avatar from "@/assets/Avatar.jpg";
+
 import { CustomCarousel as Carousel } from "@/lib/AntDesignComponents";
 import ProfileSection2 from "./ProfileSection2";
+import { useEffect, useState } from "react";
+import { useGetAdminUserQuery } from "@/redux/api/adminApi";
 
 const ProfileSection = () => {
+  const [seekerId, setSeekerId] = useState<string>("");
+
+  useEffect(() => {
+    const userId = sessionStorage.getItem("houseSeekerId");
+    if (userId) {
+      setSeekerId(userId);
+    }
+  }, [])
+
+  const { data, isSuccess, isError, error } = useGetAdminUserQuery({ id: seekerId });
+  const [user, setUser] = useState<Record<string, any>>({});
+  useEffect(() => {
+    if (isSuccess) {
+      setUser(data?.data);
+      console.log(data);
+    }
+    if (isError) {
+      console.log(error);
+    }
+  }, [data, error, isError, isSuccess]);
   return (
     <div className="grid grid-cols-1 md:grid-cols-[70%_30%] w-full md:py-[1rem]">
       <div className="flex flex-col gap-[0.5rem]">
         <div className="p-[0.5rem] border border-[#D6DDEB] px-[20px] py-[13px] flex flex-col gap-[0.3rem]">
           <h4 className="text-[#25324B] text-[24px] font-[700]">Details</h4>
-          <Image alt="avatar" src={Avatar} />
+          <img alt="avatar" src={user?.image === null ? user?.image : ""} className="rounded-md w-[200px] h-[200px]" />
           <div className="flex flex-col gap-[0.5rem] w-full">
             <span className="flex items-center gap-[0.5rem]">
               <h6 className="text-[#32475C99]/[60%] text-[16px] font-[700]">
                 Full Name:
               </h6>
               <p className="text-[#32475C99]/[60%] text-[12px] md:text-[16px] font-[400]">
-                James Bond
+                {user?.name}
               </p>
             </span>
             <span className="flex items-center gap-[0.5rem]">
@@ -25,7 +48,7 @@ const ProfileSection = () => {
                 Categories:
               </h6>
               <p className="text-[#32475C99]/[60%] text-[12px] md:text-[16px] font-[400]">
-                One Bedroom, Bungalow
+                {/* {user?.listings?.map((item: string) => item)} */}
               </p>
             </span>
             <span className="flex items-center gap-[0.5rem]">
@@ -33,7 +56,7 @@ const ProfileSection = () => {
                 Location:
               </h6>
               <p className="text-[#32475C99]/[60%] text-[12px] md:text-[16px] font-[400]">
-                Lagos, Nigeria
+                {user?.location}
               </p>
             </span>
             <span className="flex items-center gap-[0.5rem]">
@@ -41,7 +64,7 @@ const ProfileSection = () => {
                 Lifestyle:
               </h6>
               <p className="text-[#32475C99]/[60%] text-[12px] md:text-[16px] font-[400]">
-                Friendly, Indoor
+                {user?.lifestyle === null ? user?.lifestyle : "No lifestyle"}
               </p>
             </span>
             <span className="flex items-center gap-[0.5rem]">
@@ -49,7 +72,7 @@ const ProfileSection = () => {
                 Language:
               </h6>
               <p className="text-[#32475C99]/[60%] text-[12px] md:text-[16px] font-[400]">
-                English, French
+                {user?.language === null ? user?.language : "No language"}
               </p>
             </span>
             <span className="flex items-center gap-[0.5rem]">
@@ -57,7 +80,7 @@ const ProfileSection = () => {
                 Budget:
               </h6>
               <p className="text-[#32475C99]/[60%] text-[12px] md:text-[16px] font-[400]">
-                100k-500k
+                {user?.budget === null ? user?.budget : "No budget"}
               </p>
             </span>
             <span className="flex items-center gap-[0.5rem]">
@@ -65,7 +88,7 @@ const ProfileSection = () => {
                 Pet:
               </h6>
               <p className="text-[#32475C99]/[60%] text-[12px] md:text-[16px] font-[400]">
-                Cat
+                {user?.pet === null ? user?.pet : "No pet"}
               </p>
             </span>
             <span className="flex items-center gap-[0.5rem]">
@@ -73,7 +96,7 @@ const ProfileSection = () => {
                 Gender:
               </h6>
               <p className="text-[#32475C99]/[60%] text-[12px] md:text-[16px] font-[400]">
-                Male
+                {user?.gender === null ? user?.gender : "No gender"}
               </p>
             </span>
             <span className="flex items-center gap-[0.5rem]">
@@ -81,7 +104,7 @@ const ProfileSection = () => {
                 Employment:
               </h6>
               <p className="text-[#32475C99]/[60%] text-[12px] md:text-[16px] font-[400]">
-                Self-employed
+                {user?.employment === null ? user?.employment : "No employment"}
               </p>
             </span>
           </div>
@@ -91,13 +114,7 @@ const ProfileSection = () => {
             <h4 className="text-[#25324B] text-[24px] font-[700]">About</h4>
           </span>
           <p className="text-[12px] md:text-[16px] font-[400] text-[#515B6F]">
-            I’m a product designer + filmmaker currently working remotely at
-            Twitter from beautiful Manchester, United Kingdom. I’m passionate
-            about designing digital products that have a positive impact on the
-            world..
-          </p>
-          <p className="text-[12px] md:text-[16px] font-[400] text-[#515B6F]">
-            I am playful person, lover of cat and i don’t like to smoke
+            {user?.description ? user?.description : "No description"}
           </p>
         </div>
 
@@ -226,7 +243,7 @@ const ProfileSection = () => {
           </div>
         </div>
       </div>
-      <ProfileSection2 />
+      <ProfileSection2 data={user} />
     </div>
   );
 };

@@ -1,5 +1,6 @@
 import NextArrow from "@/assets/icons/NextArrow";
 import HouseSeekersTable from "./HouseSeekersTable";
+import { todayDate } from "@/utils/TodayDate";
 
 const HouseSeekers = () => {
   return (
@@ -9,7 +10,7 @@ const HouseSeekers = () => {
           House-Seekers
         </h2>
         <p className="text-[#32475C99]/[60%] text-[16px] font-[700]">
-          Showing your admin metrics for July 16,2023 - July 25,2023
+          Showing your admin metrics for {todayDate}
         </p>
       </div>
       <div className="w[98%] py-[0.5rem] md:py-[1rem] px[2rem] gap-[0.5rem] grid grid-cols-1 md:grid-cols-3 items-center justify-between">
